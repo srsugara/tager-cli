@@ -2,12 +2,23 @@ package cmd
 
 import (
 	"context"
+	"time"
 
 	"github.com/spf13/cobra"
 
 	_ "github.com/go-kivik/couchdb" // The CouchDB driver
 	"github.com/go-kivik/kivik"
 )
+
+type Task struct {
+	ID          string `json:"_id"`
+	Rev         string `json:"_rev,omitempty"`
+	Title       string `json:"title"`
+	Description string `json:"description"`
+	Tags        string `json:"tags"`
+	Status      string `json:"status"`
+	CreatedDate string `json:"created_date"`
+}
 
 // globalDatatCmd represents the version command
 var addTaskCmd = &cobra.Command{
@@ -28,7 +39,14 @@ var addTaskCmd = &cobra.Command{
 		title, _ := cmd.Flags().GetString("title")
 		description, _ := cmd.Flags().GetString("description")
 		tags, _ := cmd.Flags().GetString("tags")
-
+		doc := Task{
+			ID:          id,
+			Title:       title,
+			Description: description,
+			Tags:        tags,
+			Status:      "unstarted",
+			CreatedDate: "" + time.Now().Format(time.RFC3339),
+		}
 	},
 }
 
