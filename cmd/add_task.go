@@ -2,6 +2,7 @@ package cmd
 
 import (
 	"context"
+	"fmt"
 	"time"
 
 	"github.com/spf13/cobra"
@@ -47,6 +48,11 @@ var addTaskCmd = &cobra.Command{
 			Status:      "unstarted",
 			CreatedDate: "" + time.Now().Format(time.RFC3339),
 		}
+		rev, err := db.Put(context.TODO(), id, doc)
+		if err != nil {
+			panic(err)
+		}
+		fmt.Printf("Task inserted has revision%s\n", rev)
 	},
 }
 
