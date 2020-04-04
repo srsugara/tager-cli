@@ -58,8 +58,8 @@ var addTaskCmd = &cobra.Command{
 
 func init() {
 	rootCmd.AddCommand(addTaskCmd)
-	addTaskCmd.Flags().StringP("id", "i", "", "Id Task")
-	addTaskCmd.Flags().StringP("title", "t", "", "Title Task")
+	addTaskCmd.PersistentFlags().StringP("id", "i", "", "Id Task")
+	addTaskCmd.PersistentFlags().StringP("title", "t", "", "Title Task")
 	addTaskCmd.PersistentFlags().StringP("description", "d", "", "Description Task")
 	addTaskCmd.PersistentFlags().StringP("tags", "g", "", "Tags Task")
 }
