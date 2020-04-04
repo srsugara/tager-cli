@@ -27,7 +27,7 @@ var listTaskCmd = &cobra.Command{
 		}
 		query := map[string]interface{}{
 			"selector": map[string]interface{}{},
-			"fields":   []string{"_id", "_rev", "title", "description", "status", "tags"},
+			"fields":   []string{"_id", "_rev", "title", "description", "status", "tags", "created_date"},
 		}
 		rows, err := db.Find(context.TODO(), query)
 		if err != nil {
@@ -36,7 +36,7 @@ var listTaskCmd = &cobra.Command{
 		// instantiate and styling table to show data
 		headerFmt := color.New(color.FgGreen, color.Underline).SprintfFunc()
 		columnFmt := color.New(color.FgYellow).SprintfFunc()
-		tbl := table.New("ID", "Title", "Description", "Status", "Tags")
+		tbl := table.New("ID", "Title", "Description", "Status", "Tags", "Created")
 		tbl.WithHeaderFormatter(headerFmt).WithFirstColumnFormatter(columnFmt)
 		for rows.Next() {
 			var doc interface{}
@@ -45,7 +45,7 @@ var listTaskCmd = &cobra.Command{
 			}
 			/* do something with doc */
 			dat, _ := doc.(map[string]interface{})
-			tbl.AddRow(dat["_id"], dat["title"], dat["description"], dat["status"], dat["tags"])
+			tbl.AddRow(dat["_id"], dat["title"], dat["description"], dat["status"], dat["tags"], dat["created_date"])
 		}
 		tbl.Print()
 		if rows.Err() != nil {
