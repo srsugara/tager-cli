@@ -21,6 +21,23 @@ var listTaskCmd = &cobra.Command{
 		if err != nil {
 			panic(err)
 		}
+		query := map[string]interface{}{
+			"selector": map[string]interface{}{"tags": "frontend"},
+			"fields":   []string{"_id", "_rev", "title", "description", "status", "tags"},
+		}
+		rows, err := db.Find(context.TODO(), query)
+		if err != nil {
+			panic(err)
+		}
+		for rows.Next() {
+			var doc interface{}
+			if err := rows.ScanDoc(&doc); err != nil {
+				panic(err)
+			}
+			/* do something with doc */
+			dat, _ := doc.(map[string]interface{})
+
+		}
 	},
 }
 
