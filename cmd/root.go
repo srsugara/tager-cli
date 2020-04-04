@@ -8,7 +8,7 @@ import (
 )
 
 var rootCmd = &cobra.Command{
-	Use: "tager",
+	Use: "tager-cli",
 	Short: `
                         
  /__ __\/  _ \/  __//  __//  __\      /   _\/ \   / \
