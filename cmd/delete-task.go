@@ -2,6 +2,7 @@ package cmd
 
 import (
 	"context"
+	"fmt"
 
 	"github.com/spf13/cobra"
 
@@ -27,6 +28,11 @@ var deleteTaskCmd = &cobra.Command{
 		id, _ := cmd.Flags().GetString("id")
 		rev, _ := cmd.Flags().GetString("rev")
 
+		newRev, err := db.Delete(context.TODO(), id, rev)
+		if err != nil {
+			panic(err)
+		}
+		fmt.Printf("Task deleted has revision %s\n", newRev)
 	},
 }
 
