@@ -23,6 +23,10 @@ var deleteTaskCmd = &cobra.Command{
 		if err != nil {
 			panic(err)
 		}
+
+		id, _ := cmd.Flags().GetString("id")
+		rev, _ := cmd.Flags().GetString("rev")
+
 	},
 }
 
