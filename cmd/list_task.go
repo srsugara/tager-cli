@@ -27,7 +27,7 @@ var listTaskCmd = &cobra.Command{
 		}
 		query := map[string]interface{}{
 			"selector": map[string]interface{}{},
-			"fields":   []string{"_id", "_rev", "title", "description", "status", "tags", "created_date"},
+			"fields":   []string{"_id", "_rev", "title", "description", "status", "tags", "dirtyAt"},
 		}
 		rows, err := db.Find(context.TODO(), query)
 		if err != nil {
@@ -45,7 +45,7 @@ var listTaskCmd = &cobra.Command{
 			}
 			/* do something with doc */
 			dat, _ := doc.(map[string]interface{})
-			tbl.AddRow(dat["_id"], dat["_rev"], dat["title"], dat["description"], dat["status"], dat["tags"], dat["created_date"])
+			tbl.AddRow(dat["_id"], dat["_rev"], dat["title"], dat["description"], dat["status"], dat["tags"], dat["dirtyAt"])
 		}
 		tbl.Print()
 		if rows.Err() != nil {
