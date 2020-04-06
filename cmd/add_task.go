@@ -12,13 +12,13 @@ import (
 )
 
 type Task struct {
-	ID          string `json:"_id"`
+	ID          string `json:"_id,omitempty"`
 	Rev         string `json:"_rev,omitempty"`
-	Title       string `json:"title"`
-	Description string `json:"description"`
-	Tags        string `json:"tags"`
-	Status      string `json:"status"`
-	CreatedDate string `json:"created_date"`
+	Title       string `json:"title,omitempty"`
+	Description string `json:"description,omitempty"`
+	Tags        string `json:"tags,omitempty"`
+	Status      string `json:"status,omitempty"`
+	DirtyAt     string `json:"dirtyAt"`
 }
 
 // globalDatatCmd represents the version command
@@ -41,12 +41,11 @@ var addTaskCmd = &cobra.Command{
 		description, _ := cmd.Flags().GetString("description")
 		tags, _ := cmd.Flags().GetString("tags")
 		doc := Task{
-			ID:          id,
 			Title:       title,
 			Description: description,
 			Tags:        tags,
 			Status:      "unstarted",
-			CreatedDate: "" + time.Now().Format(time.RFC3339),
+			DirtyAt:     "" + time.Now().Format(time.RFC3339),
 		}
 		rev, err := db.Put(context.TODO(), id, doc)
 		if err != nil {
@@ -58,7 +57,6 @@ var addTaskCmd = &cobra.Command{
 
 func init() {
 	rootCmd.AddCommand(addTaskCmd)
-	addTaskCmd.PersistentFlags().StringP("id", "i", "", "Id Task")
 	addTaskCmd.PersistentFlags().StringP("title", "t", "", "Title Task")
 	addTaskCmd.PersistentFlags().StringP("description", "d", "", "Description Task")
 	addTaskCmd.PersistentFlags().StringP("tags", "g", "", "Tags Task")
