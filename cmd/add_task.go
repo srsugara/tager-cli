@@ -11,16 +11,6 @@ import (
 	"github.com/go-kivik/kivik"
 )
 
-type Task struct {
-	ID          string `json:"_id,omitempty"`
-	Rev         string `json:"_rev,omitempty"`
-	Title       string `json:"title,omitempty"`
-	Description string `json:"description,omitempty"`
-	Tags        string `json:"tags,omitempty"`
-	Status      string `json:"status,omitempty"`
-	DirtyAt     string `json:"dirtyAt"`
-}
-
 // globalDatatCmd represents the version command
 var addTaskCmd = &cobra.Command{
 	Use:   "add-task",
