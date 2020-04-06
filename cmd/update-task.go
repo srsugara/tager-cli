@@ -2,6 +2,8 @@ package cmd
 
 import (
 	"context"
+	"fmt"
+	"time"
 
 	"github.com/spf13/cobra"
 
@@ -23,15 +25,27 @@ var updateTaskCmd = &cobra.Command{
 		if err != nil {
 			panic(err)
 		}
+
+		id, _ := cmd.Flags().GetString("id")
+		rev, _ := cmd.Flags().GetString("rev")
+		status, _ := cmd.Flags().GetString("status")
+
+		doc := Task{
+			Rev:     rev,
+			Status:  status,
+			DirtyAt: "" + time.Now().Format(time.RFC3339),
+		}
+		newRev, err := db.Put(context.TODO(), id, doc)
+		if err != nil {
+			panic(err)
+		}
+		fmt.Printf("Task updated has new revision%s\n", newRev)
 	},
 }
 
 func init() {
-	rootCmd.AddCommand(addTaskCmd)
+	rootCmd.AddCommand(updateTaskCmd)
 	updateTaskCmd.PersistentFlags().StringP("id", "i", "", "Id Task")
 	updateTaskCmd.PersistentFlags().StringP("rev", "r", "", "Revision Task")
-	updateTaskCmd.PersistentFlags().StringP("title", "t", "", "Title Task")
-	updateTaskCmd.PersistentFlags().StringP("description", "d", "", "Description Task")
 	updateTaskCmd.PersistentFlags().StringP("status", "s", "", "Status Task")
-	updateTaskCmd.PersistentFlags().StringP("tags", "g", "", "Tags Task")
 }
