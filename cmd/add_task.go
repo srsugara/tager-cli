@@ -36,7 +36,6 @@ var addTaskCmd = &cobra.Command{
 			panic(err)
 		}
 
-		id, _ := cmd.Flags().GetString("id")
 		title, _ := cmd.Flags().GetString("title")
 		description, _ := cmd.Flags().GetString("description")
 		tags, _ := cmd.Flags().GetString("tags")
@@ -47,11 +46,12 @@ var addTaskCmd = &cobra.Command{
 			Status:      "unstarted",
 			DirtyAt:     "" + time.Now().Format(time.RFC3339),
 		}
-		rev, err := db.Put(context.TODO(), id, doc)
+		var id, rev string
+		id, rev, err = db.CreateDoc(context.TODO(), doc)
 		if err != nil {
 			panic(err)
 		}
-		fmt.Printf("Task inserted has revision%s\n", rev)
+		fmt.Printf("Task inserted has id:%s and revision:%s\n", id, rev)
 	},
 }
 
