@@ -52,19 +52,19 @@ export PATH=$PATH:$GOPATH/bin
 docker pull srsugara/tager-cli
 
 # run list command
-docker run --rm -ti tager-cli
+docker run --rm -ti srsugara/tager-cli
 
 # run list task
-docker run --rm -ti tager-cli list-task
+docker run --rm -ti srsugara/tager-cli list-task
 
 # run add task
-docker run --rm -ti tager-cli add-task -t "title task" -d "description task" -g "tags task"
+docker run --rm -ti srsugara/tager-cli add-task -t "title task" -d "description task" -g "tags task"
 
 # run update task
-docker run --rm -ti tager-cli update-task -i "id task" -r "revision task" -s "status task"
+docker run --rm -ti srsugara/tager-cli update-task -i "id task" -r "revision task" -s "status task"
 
 # run delete task
-docker run --rm -ti tager-cli delete-task -i "id task" -r "revision task"
+docker run --rm -ti srsugara/tager-cli delete-task -i "id task" -r "revision task"
 ```
 
 ## Features
